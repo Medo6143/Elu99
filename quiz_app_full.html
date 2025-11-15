@@ -1,0 +1,1213 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vocabulary Quiz — Units 1-5 (Full)</title>
+  <style>
+    :root {
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #94a3b8;
+      --accent: #7c3aed;
+      --accent-2: #06b6d4;
+      --glass: rgba(255, 255, 255, 0.04);
+      --success: #16a34a;
+      --danger: #ef4444
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%;
+      background: linear-gradient(180deg, #071029 0%, #061022 60%);
+      color: #e6eef8;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      line-height: 1.35;
+      margin: 0
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 28px auto;
+      padding: 24px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+      box-shadow: 0 10px 40px rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.03)
+    }
+
+    header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: white;
+      box-shadow: 0 8px 24px rgba(124, 58, 237, 0.18)
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0
+    }
+
+    p.lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center
+    }
+
+    select,
+    button,
+    input {
+      background: var(--glass);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: inherit;
+      font-weight: 600
+    }
+
+    button.primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border: 0;
+      color: white;
+      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.06)
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.03)
+    }
+
+    .panel {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 18px;
+      margin-top: 18px
+    }
+
+    .question-area {
+      min-height: 260px;
+      padding: 18px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(12, 18, 28, 0.6), rgba(8, 12, 18, 0.4));
+      border: 1px solid rgba(255, 255, 255, 0.02)
+    }
+
+    .qtop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px
+    }
+
+    .progress {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 999px;
+      overflow: hidden;
+      flex: 1;
+      margin-left: 12px
+    }
+
+    .progress>i {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      width: 0%;
+      transition: width .35s ease
+    }
+
+    .question {
+      font-size: 18px;
+      margin-bottom: 14px
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px
+    }
+
+    .choice {
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      transition: all .12s;
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .choice:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.45)
+    }
+
+    .choice.correct {
+      outline: 2px solid rgba(22, 163, 74, 0.18);
+      background: linear-gradient(90deg, rgba(22, 163, 74, 0.06), transparent)
+    }
+
+    .choice.wrong {
+      outline: 2px solid rgba(239, 68, 68, 0.12);
+      background: linear-gradient(90deg, rgba(239, 68, 68, 0.03), transparent)
+    }
+
+    .choice.disabled {
+      opacity: 0.85;
+      pointer-events: none
+    }
+
+    .sidebar .summary {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02)
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-top: 18px
+    }
+
+    .result {
+      padding: 18px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+      text-align: center
+    }
+
+    .bigscore {
+      font-size: 44px;
+      margin: 6px 0;
+      color: var(--accent)
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    /* subtle animations */
+    .fade-in {
+      animation: fadeSlideUp .4s ease both;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* correctness animations */
+    .shake {
+      animation: shakeX .35s ease both;
+    }
+    @keyframes shakeX {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .pulse {
+      animation: pulseGlow .5s ease both;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 0 rgba(22,163,74,0); }
+      50% { box-shadow: 0 0 0 8px rgba(22,163,74,0.12); }
+      100% { box-shadow: 0 0 0 rgba(22,163,74,0); }
+    }
+
+    /* analysis scroll container */
+    .analysis-scroll {
+      max-height: 60vh;
+      overflow: auto;
+      margin-top: 8px;
+      scroll-behavior: smooth;
+    }
+    @media (max-width: 640px) {
+      .analysis-scroll { max-height: 50vh; }
+    }
+
+    /* My Answers panel */
+    .answers-card {
+      margin-top: 12px;
+    }
+    .answers-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .answers-list {
+      max-height: 40vh;
+      overflow: auto;
+      display: grid;
+      gap: 6px;
+    }
+    .answer-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 6px 8px;
+      background: rgba(255,255,255,0.02);
+    }
+    .answer-pill {
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(148,163,184,0.18);
+    }
+    .answer-ok { color: #16a34a; }
+    .answer-bad { color: #ef4444; }
+
+    @media (max-width:980px) {
+      .panel {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        order: 2
+      }
+
+      .question-area {
+        order: 1
+      }
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    .smallpad {
+      padding: 8px
+    }
+
+    footer.app-foot {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app" id="app">
+    <header>
+      <div class="brand">
+        <div class="logo">VQ</div>
+        <div>
+          <h1>Vocabulary Quiz — Units 1–5</h1>
+        </div>
+      </div>
+      <div class="controls">
+        <select id="unitSelect" aria-label="Select unit">
+          <option value="unit1">Unit 1 (100)</option>
+          <option value="unit2">Unit 2 (36)</option>
+          <option value="unit3">Unit 3 (66)</option>
+          <option value="unit4">Unit 4 (68)</option>
+          <option value="unit5">Unit 5 (72)</option>
+          <option value="all">All Units (342)</option>
+        </select>
+        <select id="countSelect" aria-label="Number of questions">
+          <option value="10">10 questions</option>
+          <option value="20">20 questions</option>
+          <option value="30">30 questions</option>
+          <option value="all">All</option>
+        </select>
+        <button id="startBtn" class="primary">Start Quiz</button>
+      </div>
+    </header>
+
+    <div class="panel">
+      <div>
+        <div class="card question-area" id="questionArea">
+          <div class="qtop">
+            <div class="small muted" id="qIndex">Select unit & press Start</div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="small muted">Progress</div>
+              <div class="progress" style="width:220px"><i id="progressBar"></i></div>
+            </div>
+          </div>
+
+          <div class="question" id="questionText">—</div>
+          <div class="choices" id="choices"></div>
+
+          <div class="footer">
+            <div class="small muted" id="hintArea"></div>
+            <div class="btn-row">
+              <button id="nextBtn" class="ghost">Next</button>
+              <button id="finishBtn" class="ghost">Finish</button>
+            </div>
+          </div>
+        </div>
+        <div id="resultModal" style="display:none;margin-top:18px">
+          <div class="result card">
+            <div class="small muted">Quiz finished</div>
+            <div class="bigscore" id="finalScore">0 / 100</div>
+            <div class="muted" id="summaryText">Your results</div>
+            <div style="margin-top:12px;display:flex;gap:8px;justify-content:center">
+              <button id="tryAgainBtn" class="primary">Try Again</button>
+              <button id="reviewBtn" class="ghost">Review Answers</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="card smallpad summary">
+          <div class="stat">
+            <div class="small">Questions</div>
+            <div id="totalQ">0</div>
+          </div>
+          <div class="stat">
+            <div class="small">Answered</div>
+            <div id="answered">0</div>
+          </div>
+          <div class="stat">
+            <div class="small">Correct</div>
+            <div id="correct">0</div>
+          </div>
+          <div class="stat">
+            <div class="small">Score</div>
+            <div id="score">0%</div>
+          </div>
+
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button id="restartBtn" class="ghost">Restart</button>
+            <!-- <button id="exportBtn" class="ghost">Export JSON</button> -->
+          </div>
+        </div>
+
+        <div class="card smallpad" style="margin-top:12px;text-align:center">
+          <div class="small muted">Tip</div>
+          <div class="muted small" style="margin-top:6px">Click an answer to lock it. Press Next to continue or Finish
+            to see results.</div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="app-foot"> Mohamed Wael</footer>
+  </div>
+
+  <script>
+    /* ====== QUESTIONS (Units 1-5) ======
+       These arrays were generated from the vocabulary list.
+       Each question object: { question, choices: [..4..], correctAnswer: index }
+    */
+
+    // Unit 1 (100)
+    const unit1Questions = [
+      { question: "A specific action or task performed is called a _____.", choices: ["activity", "article", "impression", "pace"], correctAnswer: 0 },
+      { question: "A favourable or superior position or circumstance is an _____.", choices: ["advantage", "disadvantage", "opinion", "heading"], correctAnswer: 0 },
+      { question: "To influence or have an impact on something means to _____.", choices: ["affect", "finish", "check", "pull"], correctAnswer: 0 },
+      { question: "Feeling slightly angry or irritated is being _____.", choices: ["annoyed", "bored", "surprised", "relaxed"], correctAnswer: 0 },
+      { question: "An additional or different one is called _____.", choices: ["another", "similar", "free", "online"], correctAnswer: 0 },
+      { question: "A verbal disagreement or dispute is an _____.", choices: ["argument", "conversation", "review", "meal"], correctAnswer: 0 },
+      { question: "A written report on a topic is an _____.", choices: ["article", "message", "politics", "weather"], correctAnswer: 0 },
+      { question: "A task or piece of work given to someone is an _____.", choices: ["assignment", "subject", "review", "joke"], correctAnswer: 0 },
+      { question: "Feeling uninterested or lacking engagement means being _____.", choices: ["bored", "lazy", "happy", "polite"], correctAnswer: 0 },
+      { question: "To incline your upper body forward in respect means to _____.", choices: ["bow", "shake hands", "stand", "pull"], correctAnswer: 0 },
+      { question: "Being engaged in many activities means you are _____.", choices: ["busy", "quick", "slow", "free"], correctAnswer: 0 },
+      { question: "To examine or verify something means to _____.", choices: ["check", "choose", "say", "ring"], correctAnswer: 0 },
+      { question: "To make a decision by selecting from options means to _____.", choices: ["choose", "show", "speak", "stay"], correctAnswer: 0 },
+      { question: "Something near in distance or time is _____.", choices: ["close", "past", "outside", "free"], correctAnswer: 0 },
+      { question: "A person you work with is a _____.", choices: ["colleague", "partner", "neighbour", "contact"], correctAnswer: 0 },
+      { question: "To convey information or ideas through speech or writing is to _____.", choices: ["communicate", "improve", "finish", "show"], correctAnswer: 0 },
+      { question: "A state of being linked or associated with something is a _____.", choices: ["connection", "topic", "truth", "heading"], correctAnswer: 0 },
+      { question: "A person with whom one has communication is a _____.", choices: ["contact", "partner", "colleague", "job"], correctAnswer: 0 },
+      { question: "A verbal exchange of ideas between people is a _____.", choices: ["conversation", "lecture", "seminar", "review"], correctAnswer: 0 },
+      { question: "To work together for a common goal means to _____.", choices: ["cooperate", "finish", "say", "win"], correctAnswer: 0 },
+      { question: "An unfavourable condition or circumstance is a _____.", choices: ["disadvantage", "advantage", "opinion", "situation"], correctAnswer: 0 },
+      { question: "To have a different opinion from someone means to _____.", choices: ["disagree", "improve", "review", "show"], correctAnswer: 0 },
+      { question: "'Don't think so' expresses _____.", choices: ["doubt", "agreement", "certainty", "happiness"], correctAnswer: 0 },
+      { question: "A gadget powered by electricity is an _____.", choices: ["electronic device", "tablet", "radio", "weather"], correctAnswer: 0 },
+      { question: "The application of scientific principles to build structures is called _____.", choices: ["engineering", "politics", "sport", "research"], correctAnswer: 0 },
+      { question: "Something that costs a lot of money is _____.", choices: ["expensive", "free", "cheap", "quick"], correctAnswer: 0 },
+      { question: "Looking directly into someone's eyes during conversation is _____.", choices: ["eye contact", "focus", "impression", "truth"], correctAnswer: 0 },
+      { question: "Interaction happening in person is called _____.", choices: ["face to face", "online", "together", "outside"], correctAnswer: 0 },
+      { question: "To complete or reach the end of a task means to _____.", choices: ["finish", "focus", "show", "win"], correctAnswer: 0 },
+      { question: "The center of attention or concentration is called _____.", choices: ["focus", "heading", "skill", "meal"], correctAnswer: 0 },
+      { question: "Something not restricted or without cost is _____.", choices: ["free", "quick", "busy", "positive"], correctAnswer: 0 },
+      { question: "To take place or occur means to _____.", choices: ["happen", "stand", "stay", "pull"], correctAnswer: 0 },
+      { question: "Feeling joy or satisfaction means being _____.", choices: ["happy", "annoyed", "negative", "lazy"], correctAnswer: 0 },
+      { question: "A title that provides information about a topic is a _____.", choices: ["heading", "subject", "article", "review"], correctAnswer: 0 },
+      { question: "A feeling or opinion formed based on information is an _____.", choices: ["impression", "focus", "politics", "meal"], correctAnswer: 0 },
+      { question: "To make something better or enhance quality means to _____.", choices: ["improve", "choose", "send", "win"], correctAnswer: 0 },
+      { question: "Something that captures attention is _____.", choices: ["interesting", "boring", "simple", "slow"], correctAnswer: 0 },
+      { question: "A global computer network is the _____.", choices: ["internet", "radio", "connection", "pace"], correctAnswer: 0 },
+      { question: "Paid work or employment is a _____.", choices: ["job", "meal", "subject", "pace"], correctAnswer: 0 },
+      { question: "A form of humor with a short narrative is a _____.", choices: ["joke", "review", "heading", "truth"], correctAnswer: 0 },
+      { question: "Someone lacking motivation or unwilling to work is _____.", choices: ["lazy", "busy", "quick", "positive"], correctAnswer: 0 },
+      { question: "An educational talk or speech is a _____.", choices: ["lecture", "seminar", "conversation", "review"], correctAnswer: 0 },
+      { question: "A place where books are kept for reading or research is a _____.", choices: ["library", "seminar", "office", "restaurant"], correctAnswer: 0 },
+      { question: "A midday meal is called _____.", choices: ["lunch", "meal", "break", "review"], correctAnswer: 0 },
+      { question: "To initiate or receive a telephone conversation is to _____.", choices: ["make/get a phone call", "send an email", "review", "win"], correctAnswer: 0 },
+      { question: "Perhaps or indicating uncertainty means _____.", choices: ["maybe", "right", "slow", "outside"], correctAnswer: 0 },
+      { question: "An occasion when food is eaten is called a _____.", choices: ["meal", "lunch", "focus", "weather"], correctAnswer: 0 },
+      { question: "To come into contact or encounter someone means to _____.", choices: ["meet", "see", "stay", "finish"], correctAnswer: 0 },
+      { question: "A written, verbal, or electronic communication is a _____.", choices: ["message", "article", "joke", "heading"], correctAnswer: 0 },
+      { question: "A medium of exchange used for buying things is _____.", choices: ["money", "meal", "weather", "sport"], correctAnswer: 0 },
+      { question: "The part connecting the head to the body is the _____.", choices: ["neck", "shoulder", "hand", "back"], correctAnswer: 0 },
+      { question: "Characterized by pessimism or bad qualities means _____.", choices: ["negative", "positive", "polite", "quick"], correctAnswer: 0 },
+      { question: "A person living near you is a _____.", choices: ["neighbour", "colleague", "partner", "contact"], correctAnswer: 0 },
+      { question: "A periodical publication containing news is a _____.", choices: ["newspaper", "heading", "subject", "weather"], correctAnswer: 0 },
+      { question: "Connected to or via the internet means _____.", choices: ["online", "together", "outside", "free"], correctAnswer: 0 },
+      { question: "A personal belief or judgment is an _____.", choices: ["opinion", "truth", "review", "focus"], correctAnswer: 0 },
+      { question: "In the open air is called _____.", choices: ["outside", "past", "close", "online"], correctAnswer: 0 },
+      { question: "The speed at which something happens is called _____.", choices: ["pace", "focus", "skill", "truth"], correctAnswer: 0 },
+      { question: "A person romantically or professionally involved with you is a _____.", choices: ["partner", "colleague", "contact", "neighbour"], correctAnswer: 0 },
+      { question: "Referring to a time before the present means _____.", choices: ["past", "now", "later", "ahead"], correctAnswer: 0 },
+      { question: "Showing courteous and respectful behaviour means being _____.", choices: ["polite", "positive", "busy", "similar"], correctAnswer: 0 },
+      { question: "Activities related to government are called _____.", choices: ["politics", "research", "sport", "review"], correctAnswer: 0 },
+      { question: "Liked by many people means _____.", choices: ["popular", "positive", "negative", "slow"], correctAnswer: 0 },
+      { question: "Characterized by optimism or good qualities means _____.", choices: ["positive", "negative", "quick", "free"], correctAnswer: 0 },
+      { question: "To exert force and move something toward yourself means to _____.", choices: ["pull", "push", "shake", "ring"], correctAnswer: 0 },
+      { question: "Fast or prompt in speed means _____.", choices: ["quick", "slow", "lazy", "busy"], correctAnswer: 0 },
+      { question: "A system for receiving broadcast signals is a _____.", choices: ["radio", "tablet", "internet", "article"], correctAnswer: 0 },
+      { question: "Feeling calm and comfortable means being _____.", choices: ["relaxed", "busy", "annoyed", "negative"], correctAnswer: 0 },
+      { question: "A systematic investigation to gain knowledge is called _____.", choices: ["research", "review", "subject", "weather"], correctAnswer: 0 },
+      { question: "To assess or examine something critically means to _____.", choices: ["review", "choose", "finish", "stay"], correctAnswer: 0 },
+      { question: "Acknowledging someone is correct is saying _____.", choices: ["you're right", "maybe", "I don’t think so", "sure"], correctAnswer: 0 },
+      { question: "To make a phone call to someone means to _____.", choices: ["ring", "check", "stay", "speak"], correctAnswer: 0 },
+      { question: "To utter words or express thoughts verbally means to _____.", choices: ["say", "tell", "review", "focus"], correctAnswer: 0 },
+      { question: "A small group meeting for discussion is a _____.", choices: ["seminar", "lecture", "review", "conversation"], correctAnswer: 0 },
+      { question: "To dispatch or receive a written message is to _____.", choices: ["send/get a letter", "send/get a text", "make a call", "finish"], correctAnswer: 0 },
+      { question: "To send or receive a short written electronic message is to _____.", choices: ["send/get a text", "send/get an email", "review", "choose"], correctAnswer: 0 },
+      { question: "To send or receive email messages is to _____.", choices: ["send/get an email", "send/get a text", "speak", "win"], correctAnswer: 0 },
+      { question: "To greet someone by clasping hands is to _____.", choices: ["shake hands", "bow", "stand", "stay"], correctAnswer: 0 },
+      { question: "Used to express obligation or expectation means _____.", choices: ["should", "may", "can", "win"], correctAnswer: 0 },
+      { question: "To display something to others means to _____.", choices: ["show", "choose", "finish", "review"], correctAnswer: 0 },
+      { question: "Having a likeness to something else means _____.", choices: ["similar", "another", "free", "positive"], correctAnswer: 0 },
+      { question: "Easy to understand or not complicated is _____.", choices: ["simple", "complicated", "interesting", "modern"], correctAnswer: 0 },
+      { question: "A specific condition or circumstance is a _____.", choices: ["situation", "subject", "weather", "meal"], correctAnswer: 0 },
+      { question: "An ability or expertise in doing something is a _____.", choices: ["skill", "pace", "review", "meal"], correctAnswer: 0 },
+      { question: "Characterized by reduced speed means _____.", choices: ["slow", "quick", "lazy", "simple"], correctAnswer: 0 },
+      { question: "Expressing happiness with your face is to _____.", choices: ["smile", "show", "say", "speak"], correctAnswer: 0 },
+      { question: "Online platforms enabling communication are called _____.", choices: ["social media", "internet", "radio", "tablet"], correctAnswer: 0 },
+      { question: "A method or remedy to resolve problems is a _____.", choices: ["solution", "review", "meal", "subject"], correctAnswer: 0 },
+      { question: "To communicate verbally is to _____.", choices: ["speak", "say", "tell", "shake"], correctAnswer: 0 },
+      { question: "A physical activity with rules and competition is a _____.", choices: ["sport", "meal", "weather", "focus"], correctAnswer: 0 },
+      { question: "To remain upright on one's feet means to _____.", choices: ["stand", "stay", "pull", "finish"], correctAnswer: 0 },
+      { question: "To remain in a particular place is to _____.", choices: ["stay", "stand", "pull", "show"], correctAnswer: 0 },
+      { question: "To take something without permission is to _____.", choices: ["steal", "win", "choose", "finish"], correctAnswer: 0 },
+      { question: "A distinctive manner or way of doing something is called _____.", choices: ["style", "subject", "review", "meal"], correctAnswer: 0 },
+      { question: "A topic or theme under discussion is a _____.", choices: ["subject", "heading", "article", "message"], correctAnswer: 0 },
+      { question: "Being confident or certain about something means being _____.", choices: ["sure", "maybe", "negative", "slow"], correctAnswer: 0 },
+      { question: "Feeling unexpected astonishment means being _____.", choices: ["surprised", "bored", "relaxed", "lazy"], correctAnswer: 0 },
+      { question: "To turn off a device means to _____.", choices: ["switch off", "pull", "stand", "send"], correctAnswer: 0 },
+      { question: "A portable computer device with a touch screen is a _____.", choices: ["tablet", "radio", "internet", "weather"], correctAnswer: 0 },
+      { question: "To alternate or share tasks means to _____.", choices: ["take turns", "shake hands", "show", "choose"], correctAnswer: 0 },
+      { question: "To engage in a conversation means to _____.", choices: ["talk", "say", "tell", "finish"], correctAnswer: 0 },
+      { question: "To narrate or inform someone about something is to _____.", choices: ["tell", "say", "speak", "review"], correctAnswer: 0 },
+      { question: "In a unified or joined manner means _____.", choices: ["together", "outside", "online", "free"], correctAnswer: 0 },
+      { question: "Being in accordance with fact or reality is the _____.", choices: ["truth", "opinion", "review", "heading"], correctAnswer: 0 },
+      { question: "Electronic games played on a screen are called _____.", choices: ["video games", "internet", "radio", "tablet"], correctAnswer: 0 },
+      { question: "An activity considered unproductive is a _____.", choices: ["waste of time", "meal", "weather", "pace"], correctAnswer: 0 },
+      { question: "To observe something attentively means to _____.", choices: ["watch", "review", "focus", "win"], correctAnswer: 0 },
+      { question: "Atmospheric conditions in a place are called _____.", choices: ["weather", "climate", "season", "weekend"], correctAnswer: 0 },
+      { question: "The two days at the end of the working week are the _____.", choices: ["weekend", "holiday", "break", "off-time"], correctAnswer: 0 },
+      { question: "To achieve victory or success is to _____.", choices: ["win", "finish", "show", "choose"], correctAnswer: 0 },
+      { question: "In the absence of something means _____.", choices: ["without", "outside", "past", "free"], correctAnswer: 0 }
+    ];
+
+    // Unit 2 (36)
+    const unit2Questions = [
+      { question: "A peaceful and relaxed state is called _____.", choices: ["calm", "late", "dark", "ill"], correctAnswer: 0 },
+      { question: "A visible mass of condensed water vapour in the sky is a _____.", choices: ["cloud", "storm", "warning", "drink"], correctAnswer: 0 },
+      { question: "To hold or enclose something within an area is to _____.", choices: ["contain", "follow", "cook", "wear"], correctAnswer: 0 },
+      { question: "To prepare food by heating it is to _____.", choices: ["cook", "decide", "sound", "join"], correctAnswer: 0 },
+      { question: "Having little or no light means it is _____.", choices: ["dark", "windy", "late", "lovely"], correctAnswer: 0 },
+      { question: "To make a choice or reach a conclusion is to _____.", choices: ["decide", "get out", "invite", "follow"], correctAnswer: 0 },
+      { question: "A liquid consumed to quench thirst is a _____.", choices: ["drink", "moment", "cloud", "pasta"], correctAnswer: 0 },
+      { question: "To operate a vehicle is to _____.", choices: ["drive", "follow", "wear", "invite"], correctAnswer: 0 },
+      { question: "Mutual interaction between individuals is expressed using _____.", choices: ["each other", "later", "warning", "present"], correctAnswer: 0 },
+      { question: "To come after or go behind someone is to _____.", choices: ["follow", "join", "contain", "sound"], correctAnswer: 0 },
+      { question: "To exit or leave a place means to _____.", choices: ["get out", "drive", "decide", "sound"], correctAnswer: 0 },
+      { question: "A suggestion or proposal can be expressed with _____.", choices: ["How about?", "I’m afraid", "What shall we do?", "warning"], correctAnswer: 0 },
+      { question: "A polite phrase to show regret or reluctance is _____.", choices: ["I'm afraid", "How about?", "lovely", "late"], correctAnswer: 0 },
+      { question: "A state of poor health is called _____.", choices: ["ill", "calm", "warning", "lovely"], correctAnswer: 0 },
+      { question: "To deduce or conclude information is to _____.", choices: ["infer", "invite", "drive", "sound"], correctAnswer: 0 },
+      { question: "To ask someone to come is to _____.", choices: ["invite", "wear", "follow", "get out"], correctAnswer: 0 },
+      { question: "To become a member or participant is to _____.", choices: ["join", "drive", "cook", "sound"], correctAnswer: 0 },
+      { question: "Behind the scheduled or expected time means _____.", choices: ["late", "later", "lovely", "windy"], correctAnswer: 0 },
+      { question: "At a subsequent or future time means _____.", choices: ["later", "late", "moment", "sound"], correctAnswer: 0 },
+      { question: "Charming or delightful in appearance means _____.", choices: ["lovely", "dark", "windy", "cloud"], correctAnswer: 0 },
+      { question: "A brief and specific period of time is a _____.", choices: ["moment", "present", "drink", "road"], correctAnswer: 0 },
+      { question: "A place for professional or administrative work is an _____.", choices: ["office", "road", "party", "cloud"], correctAnswer: 0 },
+      { question: "Belonging to oneself is described as _____.", choices: ["own", "present", "pasta", "lovely"], correctAnswer: 0 },
+      { question: "A social gathering or celebration is a _____.", choices: ["party", "office", "road", "pasta"], correctAnswer: 0 },
+      { question: "A type of Italian food made from wheat is _____.", choices: ["pasta", "drink", "present", "storm"], correctAnswer: 0 },
+      { question: "A gift given on a special occasion is a _____.", choices: ["present", "moment", "warning", "cloud"], correctAnswer: 0 },
+      { question: "A paved route for vehicles is a _____.", choices: ["road", "office", "storm", "party"], correctAnswer: 0 },
+      { question: "Frozen ice crystals falling from the sky is called _____.", choices: ["snow", "rain", "wind", "cloud"], correctAnswer: 0 },
+      { question: "To emit noise or vibrations is to _____.", choices: ["sound", "drive", "cook", "wear"], correctAnswer: 0 },
+      { question: "A severe weather condition with strong winds and rain is a _____.", choices: ["storm", "tornado", "snow", "cloud"], correctAnswer: 0 },
+      { question: "Feeling a need for fluids means being _____.", choices: ["thirsty", "ill", "late", "lovely"], correctAnswer: 0 },
+      { question: "A violent windstorm with a twisting funnel is a _____.", choices: ["tornado", "storm", "snow", "cloud"], correctAnswer: 0 },
+      { question: "Giving notice or alerting someone of danger is _____.", choices: ["warning", "How about?", "late", "moment"], correctAnswer: 0 },
+      { question: "To have clothing on your body means to _____.", choices: ["wear", "drive", "contain", "follow"], correctAnswer: 0 },
+      { question: "A question asking for suggestions is _____.", choices: ["What shall we do?", "I’m afraid", "How about?", "warning"], correctAnswer: 0 },
+      { question: "Characterized by strong winds means _____.", choices: ["windy", "dark", "lovely", "calm"], correctAnswer: 0 }
+    ];
+
+    // Unit 3 (66)
+    const unit3Questions = [
+      { question: "An unexpected and unfortunate event is called an _____.", choices: ["accident", "feeling", "guide", "queue"], correctAnswer: 0 },
+      { question: "Guidance or suggestions offered to help someone is called _____.", choices: ["advice", "project", "price", "notice"], correctAnswer: 0 },
+      { question: "A place where airplanes arrive and depart is an _____.", choices: ["airport", "museum", "housing", "view"], correctAnswer: 0 },
+      { question: "Causing wonder or astonishment means something is _____.", choices: ["amazing", "dirty", "quiet", "basic"], correctAnswer: 0 },
+      { question: "Creative expression in visual form is called _____.", choices: ["art", "price", "project", "culture"], correctAnswer: 0 },
+      { question: "A person skilled in creating art is an _____.", choices: ["artist", "guide", "king", "engine"], correctAnswer: 0 },
+      { question: "Sound, especially in recordings or broadcasts, is called _____.", choices: ["audio", "rainforest", "queue", "website"], correctAnswer: 0 },
+      { question: "Typical or common describes something _____.", choices: ["average", "unique", "modern", "dangerous"], correctAnswer: 0 },
+      { question: "Fundamental or essential describes something _____.", choices: ["basic", "amazing", "dirty", "quiet"], correctAnswer: 0 },
+      { question: "Having great visual appeal means something is _____.", choices: ["beautiful", "complicated", "dirty", "crazy"], correctAnswer: 0 },
+      { question: "A South American country known for rainforests is _____.", choices: ["Brazil", "Finland", "India", "Greece"], correctAnswer: 0 },
+      { question: "To go upward or ascend is to _____.", choices: ["climb", "paint", "fix", "lose"], correctAnswer: 0 },
+      { question: "Involving many details and hard to understand means _____.", choices: ["complicated", "quiet", "modern", "famous"], correctAnswer: 0 },
+      { question: "Mentally unstable or wildly enthusiastic describes someone _____.", choices: ["crazy", "amazing", "dirty", "quiet"], correctAnswer: 0 },
+      { question: "The customs and social behaviors of a group represent its _____.", choices: ["culture", "view", "price", "website"], correctAnswer: 0 },
+      { question: "Posing a risk of harm or injury means something is _____.", choices: ["dangerous", "unique", "dirty", "basic"], correctAnswer: 0 },
+      { question: "Without a doubt or certainly means _____.", choices: ["definitely", "recently", "quietly", "strongly"], correctAnswer: 0 },
+      { question: "Extremely tasty describes something _____.", choices: ["delicious", "dirty", "average", "modern"], correctAnswer: 0 },
+      { question: "Hard to do or understand means something is _____.", choices: ["difficult", "modern", "crazy", "quiet"], correctAnswer: 0 },
+      { question: "Not clean or soiled describes something _____.", choices: ["dirty", "beautiful", "amazing", "traditional"], correctAnswer: 0 },
+      { question: "A smart marine mammal known for intelligence is a _____.", choices: ["dolphin", "king", "guide", "climb"], correctAnswer: 0 },
+      { question: "A machine that converts energy into work is an _____.", choices: ["engine", "project", "website", "guide"], correctAnswer: 0 },
+      { question: "A statement proven to be true is a _____.", choices: ["fact", "feeling", "notice", "queue"], correctAnswer: 0 },
+      { question: "Widely recognized or celebrated means _____.", choices: ["famous", "unique", "dangerous", "dirty"], correctAnswer: 0 },
+      { question: "An emotional state or sensation is a _____.", choices: ["feeling", "project", "view", "audio"], correctAnswer: 0 },
+      { question: "To engage in a physical or verbal conflict is to _____.", choices: ["fight", "climb", "jump", "miss"], correctAnswer: 0 },
+      { question: "A Nordic country in Northern Europe is _____.", choices: ["Finland", "Brazil", "Greece", "India"], correctAnswer: 0 },
+      { question: "To repair or make something work again is to _____.", choices: ["fix", "paint", "prefer", "notice"], correctAnswer: 0 },
+      { question: "A southeastern European country with ancient history is _____.", choices: ["Greece", "India", "Finland", "Brazil"], correctAnswer: 0 },
+      { question: "A person who gives direction or assistance is a _____.", choices: ["guide", "king", "artist", "project"], correctAnswer: 0 },
+      { question: "Extremely unpleasant means something is _____.", choices: ["horrible", "lovely", "amazing", "beautiful"], correctAnswer: 0 },
+      { question: "Buildings or structures where people live are called _____.", choices: ["housing", "museum", "view", "culture"], correctAnswer: 0 },
+      { question: "A vast country in South Asia is _____.", choices: ["India", "Brazil", "Finland", "Greece"], correctAnswer: 0 },
+      { question: "To propel oneself off the ground is to _____.", choices: ["jump", "fix", "miss", "fight"], correctAnswer: 0 },
+      { question: "A male monarch or ruler is a _____.", choices: ["king", "guide", "dolphin", "project"], correctAnswer: 0 },
+      { question: "To cease to have or retain something is to _____.", choices: ["lose", "miss", "fix", "climb"], correctAnswer: 0 },
+      { question: "Delightful or charming describes something _____.", choices: ["lovely", "modern", "dirty", "dangerous"], correctAnswer: 0 },
+      { question: "Primary or most significant describes something _____.", choices: ["main", "basic", "unique", "traditional"], correctAnswer: 0 },
+      { question: "To feel the absence of someone or something is to _____.", choices: ["miss", "lose", "jump", "fight"], correctAnswer: 0 },
+      { question: "Relating to present times or trends describes something _____.", choices: ["modern", "traditional", "average", "dirty"], correctAnswer: 0 },
+      { question: "A place where historical objects or art are displayed is a _____.", choices: ["museum", "housing", "view", "project"], correctAnswer: 0 },
+      { question: "Producing loud and disruptive sounds means something is _____.", choices: ["noisy", "quiet", "crazy", "complicated"], correctAnswer: 0 },
+      { question: "To observe or become aware of something is to _____.", choices: ["notice", "prefer", "fix", "paint"], correctAnswer: 0 },
+      { question: "A colored liquid used for creating art is _____.", choices: ["paint", "price", "audio", "view"], correctAnswer: 0 },
+      { question: "To like something more than something else is to _____.", choices: ["prefer", "miss", "fix", "fight"], correctAnswer: 0 },
+      { question: "The amount of money required to buy something is the _____.", choices: ["price", "project", "view", "queue"], correctAnswer: 0 },
+      { question: "A planned task with specific goals is a _____.", choices: ["project", "audio", "culture", "museum"], correctAnswer: 0 },
+      { question: "A line of people waiting for their turn is called a _____.", choices: ["queue", "view", "price", "notice"], correctAnswer: 0 },
+      { question: "Marked by little or no noise means something is _____.", choices: ["quiet", "noisy", "dangerous", "dirty"], correctAnswer: 0 },
+      { question: "A lush tropical forest with heavy rainfall is a _____.", choices: ["rainforest", "view", "museum", "queue"], correctAnswer: 0 },
+      { question: "In the recent past refers to _____.", choices: ["recently", "definitely", "quietly", "traditionally"], correctAnswer: 0 },
+      { question: "To suggest something as suitable is to _____.", choices: ["recommend", "notice", "fix", "fight"], correctAnswer: 0 },
+      { question: "A self-portrait photograph taken with a phone is a _____.", choices: ["selfie", "guide", "view", "project"], correctAnswer: 0 },
+      { question: "Showing good judgment and practicality means being _____.", choices: ["sensible", "crazy", "complicated", "average"], correctAnswer: 0 },
+      { question: "Unwell or experiencing illness means being _____.", choices: ["sick", "dirty", "dangerous", "modern"], correctAnswer: 0 },
+      { question: "A country in East Asia known for technology is _____.", choices: ["South Korea", "Brazil", "Finland", "India"], correctAnswer: 0 },
+      { question: "Unique, extraordinary, or distinct describes something _____.", choices: ["special", "basic", "average", "dirty"], correctAnswer: 0 },
+      { question: "Possessing great physical or mental power means being _____.", choices: ["strong", "quiet", "beautiful", "delicious"], correctAnswer: 0 },
+      { question: "To move through water is to _____.", choices: ["swim", "jump", "fix", "miss"], correctAnswer: 0 },
+      { question: "A document providing entry to an event is a _____.", choices: ["ticket", "queue", "view", "notice"], correctAnswer: 0 },
+      { question: "Following long-established customs describes something _____.", choices: ["traditional", "modern", "unique", "average"], correctAnswer: 0 },
+      { question: "One of a kind or unlike anything else means _____.", choices: ["unique", "basic", "crazy", "dirty"], correctAnswer: 0 },
+      { question: "Uncommon or out of the ordinary describes something _____.", choices: ["unusual", "average", "quiet", "basic"], correctAnswer: 0 },
+      { question: "A visual perspective or scene is a _____.", choices: ["view", "price", "audio", "guide"], correctAnswer: 0 },
+      { question: "A location on the internet that provides information is a _____.", choices: ["website", "project", "museum", "culture"], correctAnswer: 0 },
+      { question: "The coldest season of the year is _____.", choices: ["winter", "summer", "spring", "autumn"], correctAnswer: 0 }
+    ];
+
+    // Unit 4 (68)
+    const unit4Questions = [
+      { question: "Something that has received an award for excellence is _____.", choices: ["award-winning", "brilliant", "local", "private"], correctAnswer: 0 },
+      { question: "A sandy or pebbly shore near water is a _____.", choices: ["beach", "village", "market", "history"], correctAnswer: 0 },
+      { question: "One thousand million is called a _____.", choices: ["billion", "loaf", "variety", "duration"], correctAnswer: 0 },
+      { question: "Exceptionally intelligent or bright describes someone _____.", choices: ["brilliant", "calm", "fresh", "wooden"], correctAnswer: 0 },
+      { question: "A structure with walls and a roof is a _____.", choices: ["building", "scenery", "tourist", "flight"], correctAnswer: 0 },
+      { question: "A Southeast Asian country known for its history is _____.", choices: ["Cambodia", "Finland", "Brazil", "Greece"], correctAnswer: 0 },
+      { question: "A professional cook is a _____.", choices: ["chef", "waiter", "tourist", "pilot"], correctAnswer: 0 },
+      { question: "The process of assembling structures is called _____.", choices: ["construction", "survey", "variety", "market"], correctAnswer: 0 },
+      { question: "The amount of money required to buy something is its _____.", choices: ["cost", "price", "quality", "value"], correctAnswer: 0 },
+      { question: "To bring something new into existence is to _____.", choices: ["create", "evaluate", "look after", "recommend"], correctAnswer: 0 },
+      { question: "To be worthy of something means to _____.", choices: ["deserve", "identify", "survey", "relax"], correctAnswer: 0 },
+      { question: "A reference book that gives word meanings is a _____.", choices: ["dictionary", "loaf", "spa", "scheme"], correctAnswer: 0 },
+      { question: "A specific type of prepared food is a _____.", choices: ["dish", "loaf", "menu", "variety"], correctAnswer: 0 },
+      { question: "To multiply something by two is to _____.", choices: ["double", "create", "fly", "grow"], correctAnswer: 0 },
+      { question: "The length of time something lasts is its _____.", choices: ["duration", "lifetime", "history", "quality"], correctAnswer: 0 },
+      { question: "A designated area for economic and trade activities is an _____.", choices: ["economic zone", "tourist area", "private sector", "local region"], correctAnswer: 0 },
+      { question: "The surroundings in which a person or plant lives is the _____.", choices: ["environment", "population", "history", "scenery"], correctAnswer: 0 },
+      { question: "To assess or judge something is to _____.", choices: ["evaluate", "survey", "create", "look for"], correctAnswer: 0 },
+      { question: "Facts or information that support a claim are called _____.", choices: ["evidence", "menu", "quality", "sight"], correctAnswer: 0 },
+      { question: "Indicating the highest level of quality (often for hotels) is _____.", choices: ["five-star", "award-winning", "fresh", "local"], correctAnswer: 0 },
+      { question: "A journey made by air is a _____.", choices: ["flight", "scenery", "cruise", "tour"], correctAnswer: 0 },
+      { question: "To travel through the air using wings is to _____.", choices: ["fly", "grow", "relax", "taste"], correctAnswer: 0 },
+      { question: "Recently made or not stale describes something _____.", choices: ["fresh", "local", "private", "wooden"], correctAnswer: 0 },
+      { question: "A visual representation of data is a _____.", choices: ["graph", "menu", "scheme", "menu"], correctAnswer: 0 },
+      { question: "To increase in size or number is to _____.", choices: ["grow", "fly", "spend", "evaluate"], correctAnswer: 0 },
+      { question: "An aircraft that can hover and fly vertically is a _____.", choices: ["helicopter", "metro", "speedboat", "flight"], correctAnswer: 0 },
+      { question: "Walking in mountains or forests is called _____.", choices: ["hiking", "skiing", "sunbathing", "relaxing"], correctAnswer: 0 },
+      { question: "The study of past events is called _____.", choices: ["history", "environment", "population", "scheme"], correctAnswer: 0 },
+      { question: "To recognize or name someone is to _____.", choices: ["identify", "look for", "relax", "taste"], correctAnswer: 0 },
+      { question: "The average number of years a person is expected to live is _____.", choices: ["life expectancy", "lifetime", "duration", "history"], correctAnswer: 0 },
+      { question: "The duration of a person's life is called a _____.", choices: ["lifetime", "life expectancy", "history", "period"], correctAnswer: 0 },
+      { question: "A type of bread is called a _____.", choices: ["loaf", "dish", "menu", "sight"], correctAnswer: 0 },
+      { question: "Related to a particular area or neighborhood means _____.", choices: ["local", "private", "fresh", "wooden"], correctAnswer: 0 },
+      { question: "To take care of someone or something is to _____.", choices: ["look after", "look for", "relax", "spend"], correctAnswer: 0 },
+      { question: "To search for something is to _____.", choices: ["look for", "identify", "survey", "taste"], correctAnswer: 0 },
+      { question: "Characterized by comfort and high quality describes something _____.", choices: ["luxury", "fresh", "local", "private"], correctAnswer: 0 },
+      { question: "A place where goods are bought and sold is a _____.", choices: ["market", "scheme", "scenery", "sight"], correctAnswer: 0 },
+      { question: "A list of food items available is a _____.", choices: ["menu", "graph", "scheme", "variety"], correctAnswer: 0 },
+      { question: "An urban public transportation network is a _____.", choices: ["metro system", "speedboat cruise", "flight", "tourist bus"], correctAnswer: 0 },
+      { question: "A word meaning 'certainly' is _____.", choices: ["of course", "fresh", "local", "private"], correctAnswer: 0 },
+      { question: "A period when someone is not working is a _____.", choices: ["week off", "break", "lifetime", "duration"], correctAnswer: 0 },
+      { question: "Characterized by calmness and the absence of violence is _____.", choices: ["peaceful", "private", "local", "fresh"], correctAnswer: 0 },
+      { question: "The total number of people in an area is its _____.", choices: ["population", "village", "market", "history"], correctAnswer: 0 },
+      { question: "Not public and belonging to someone describes _____.", choices: ["private", "local", "fresh", "wooden"], correctAnswer: 0 },
+      { question: "Feeling a sense of pride means being _____.", choices: ["proud", "fresh", "luxury", "tourist"], correctAnswer: 0 },
+      { question: "The degree of excellence of something is its _____.", choices: ["quality", "value", "cost", "history"], correctAnswer: 0 },
+      { question: "To become less tense or stressed is to _____.", choices: ["relax", "taste", "identify", "look after"], correctAnswer: 0 },
+      { question: "The natural features of a landscape are called _____.", choices: ["scenery", "village", "market", "private"], correctAnswer: 0 },
+      { question: "A plan designed to achieve a purpose is a _____.", choices: ["scheme", "menu", "history", "variety"], correctAnswer: 0 },
+      { question: "A place that provides protection or refuge is a _____.", choices: ["shelter", "village", "scenery", "building"], correctAnswer: 0 },
+      { question: "Something that is seen or a view of something is a _____.", choices: ["sight", "graph", "menu", "market"], correctAnswer: 0 },
+      { question: "The sport or activity of gliding over snow is _____.", choices: ["skiing", "hiking", "sunbathing", "relaxing"], correctAnswer: 0 },
+      { question: "A place offering relaxation or wellness treatments is a _____.", choices: ["spa", "shelter", "village", "market"], correctAnswer: 0 },
+      { question: "A journey on a fast motorboat is a _____.", choices: ["speedboat cruise", "flight", "tour", "hiking"], correctAnswer: 0 },
+      { question: "To use time doing a particular activity is to _____.", choices: ["spend time", "taste", "look after", "survey"], correctAnswer: 0 },
+      { question: "People employed in an organization are the _____.", choices: ["staff", "tourists", "waiters", "population"], correctAnswer: 0 },
+      { question: "Experiencing emotional strain or tension means being _____.", choices: ["stressed", "luxury", "local", "private"], correctAnswer: 0 },
+      { question: "Lying in the sun to tan or relax is called _____.", choices: ["sunbathing", "skiing", "hiking", "spending"], correctAnswer: 0 },
+      { question: "A detailed study or examination of a subject is a _____.", choices: ["survey", "history", "quality", "scheme"], correctAnswer: 0 },
+      { question: "The sensation of flavour is called _____.", choices: ["taste", "value", "cost", "quality"], correctAnswer: 0 },
+      { question: "A person who travels for pleasure is a _____.", choices: ["tourist", "staff", "pilot", "waiter"], correctAnswer: 0 },
+      { question: "A diverse assortment of different things is a _____.", choices: ["variety", "menu", "scheme", "history"], correctAnswer: 0 },
+      { question: "A small rural community is a _____.", choices: ["village", "market", "shelter", "spa"], correctAnswer: 0 },
+      { question: "A person who serves food in a restaurant is a _____.", choices: ["waiter", "chef", "staff", "tourist"], correctAnswer: 0 },
+      { question: "A service that wakes hotel guests at a specific time is a _____.", choices: ["wake-up call", "flight alert", "warning signal", "sunrise alarm"], correctAnswer: 0 },
+      { question: "Made of wood describes something _____.", choices: ["wooden", "local", "fresh", "private"], correctAnswer: 0 },
+      { question: "Of lower quality or more unfavorable means _____.", choices: ["worse", "fresh", "local", "luxury"], correctAnswer: 0 }
+    ];
+
+    // Unit 5 (72) - NOTE: assistant generated slightly different set earlier; using the generated list
+    const unit5Questions = [
+      { question: "A pleasant smell is called a _____.", choices: ["aroma", "illness", "pressure", "crash"], correctAnswer: 0 },
+      { question: "A large marine animal with flippers is a _____.", choices: ["seal", "bear", "shark", "camel"], correctAnswer: 0 },
+      { question: "To collect or gather something is to _____.", choices: ["collect", "compare", "develop", "measure"], correctAnswer: 0 },
+      { question: "A person who pays for goods or services is a _____.", choices: ["customer", "scientist", "coach", "writer"], correctAnswer: 0 },
+      { question: "To set something apart from others is to _____.", choices: ["distinguish", "remove", "measure", "develop"], correctAnswer: 0 },
+      { question: "A very large sea creature with huge jaws is a _____.", choices: ["shark", "seal", "camel", "bear"], correctAnswer: 0 },
+      { question: "A brown, hard-shelled seed often used in cooking is a _____.", choices: ["nut", "wheat", "grain", "bean"], correctAnswer: 0 },
+      { question: "A mobile device used for communication is a _____.", choices: ["phone", "calculator", "television", "radio"], correctAnswer: 0 },
+      { question: "To teach a person or animal to behave in a certain way is to _____.", choices: ["train", "compare", "create", "heal"], correctAnswer: 0 },
+      { question: "The process of being in good physical condition is _____.", choices: ["fitness", "illness", "pressure", "smoking"], correctAnswer: 0 },
+      { question: "A feeling of worry or mental strain is called _____.", choices: ["stress", "shock", "pressure", "illness"], correctAnswer: 0 },
+      { question: "To check the amount or size of something is to _____.", choices: ["measure", "compare", "collect", "train"], correctAnswer: 0 },
+      { question: "Suddenly losing control of a vehicle is a _____.", choices: ["crash", "shock", "fitness", "aroma"], correctAnswer: 0 },
+      { question: "Something that might cause harm is a _____.", choices: ["danger", "nut", "aroma", "fitness"], correctAnswer: 0 },
+      { question: "A sudden upset of the mind or feelings is a _____.", choices: ["shock", "pressure", "illness", "crash"], correctAnswer: 0 },
+      { question: "A loud sound or strong reaction is _____.", choices: ["boom", "nut", "train", "phone"], correctAnswer: 0 },
+      { question: "Being fit and healthy improves your _____.", choices: ["well-being", "shock", "danger", "pressure"], correctAnswer: 0 },
+      { question: "The ability to do something is called _____.", choices: ["skill", "pressure", "danger", "stress"], correctAnswer: 0 },
+      { question: "A method of doing something is a _____.", choices: ["technique", "pressure", "shock", "illness"], correctAnswer: 0 },
+      { question: "The number of heartbeats per minute is your _____.", choices: ["pulse", "energy", "breath", "shock"], correctAnswer: 0 },
+      { question: "To make something grow or improve is to _____.", choices: ["develop", "measure", "collect", "shock"], correctAnswer: 0 },
+      { question: "A person who guides or trains someone is a _____.", choices: ["coach", "customer", "scientist", "artist"], correctAnswer: 0 },
+      { question: "A person who studies science is a _____.", choices: ["scientist", "coach", "customer", "writer"], correctAnswer: 0 },
+      { question: "Hard work or force applied to something is _____.", choices: ["effort", "fitness", "stress", "crash"], correctAnswer: 0 },
+      { question: "The act of inhaling air is _____.", choices: ["breathing", "fitness", "danger", "shock"], correctAnswer: 0 },
+      { question: "Feeling sick and not well is an _____.", choices: ["illness", "fitness", "nut", "celebration"], correctAnswer: 0 },
+      { question: "Gaining insight by noticing similarities and differences is to _____.", choices: ["compare", "measure", "collect", "train"], correctAnswer: 0 },
+      { question: "A flexible band of muscle around the heart is the _____.", choices: ["heart", "pulse", "lung", "brain"], correctAnswer: 0 },
+      { question: "The organ used to breathe is the _____.", choices: ["lung", "heart", "brain", "pulse"], correctAnswer: 0 },
+      { question: "A part of the body used to sense smell is the _____.", choices: ["nose", "ear", "eye", "skin"], correctAnswer: 0 },
+      { question: "An organ that controls the body and mind is the _____.", choices: ["brain", "lung", "heart", "pulse"], correctAnswer: 0 },
+      { question: "To restore someone back to health is to _____.", choices: ["heal", "stress", "shock", "collect"], correctAnswer: 0 },
+      { question: "Force that pushes something is called _____.", choices: ["pressure", "shock", "danger", "skill"], correctAnswer: 0 },
+      { question: "Drawing air in and out of the lungs is called _____.", choices: ["breath", "pulse", "brain", "shark"], correctAnswer: 0 },
+      { question: "To stay away from using something harmful is to _____.", choices: ["avoid", "collect", "measure", "train"], correctAnswer: 0 },
+      { question: "To stop smoking cigarettes is to _____.", choices: ["quit smoking", "heal", "crash", "stress"], correctAnswer: 0 },
+      { question: "A person who writes books is a _____.", choices: ["writer", "scientist", "coach", "customer"], correctAnswer: 0 },
+      { question: "To make something better or stronger is to _____.", choices: ["improve", "pressure", "collect", "shock"], correctAnswer: 0 },
+      { question: "To show that something is correct or true is to _____.", choices: ["prove", "compare", "measure", "train"], correctAnswer: 0 },
+      { question: "A chemical that can harm the body is a _____.", choices: ["toxin", "nut", "seal", "phone"], correctAnswer: 0 },
+      { question: "Using something too much is called _____.", choices: ["overuse", "effort", "pressure", "impact"], correctAnswer: 0 },
+      { question: "The effect that something has on a person is its _____.", choices: ["impact", "nut", "pulse", "crash"], correctAnswer: 0 },
+      { question: "Something you try to achieve is a _____.", choices: ["goal", "effort", "skill", "stress"], correctAnswer: 0 },
+      { question: "Something you are trying to complete or work on is a _____.", choices: ["task", "crash", "stress", "pulse"], correctAnswer: 0 },
+      { question: "A small drop of liquid is a _____.", choices: ["droplet", "nut", "seal", "coach"], correctAnswer: 0 },
+      { question: "When someone suddenly becomes unconscious is called _____.", choices: ["fainting", "quitting", "avoiding", "breathing"], correctAnswer: 0 },
+      { question: "The amount of energy used when performing a task is _____.", choices: ["effort", "stress", "impact", "breath"], correctAnswer: 0 },
+      { question: "A person who teaches fitness skills is a _____.", choices: ["fitness coach", "scientist", "writer", "customer"], correctAnswer: 0 },
+      { question: "A strong unpleasant feeling caused by something unexpected is _____.", choices: ["shock", "stress", "danger", "illness"], correctAnswer: 0 },
+      { question: "The opposite of ‘calm’ is _____.", choices: ["stressed", "collected", "healed", "trained"], correctAnswer: 0 },
+      { question: "A number that is the result of counting is a _____.", choices: ["figure", "nut", "aroma", "lung"], correctAnswer: 0 },
+      { question: "Something that causes fear is a _____.", choices: ["danger", "droplet", "pulse", "shock"], correctAnswer: 0 },
+      { question: "A device used to estimate quantity is a _____.", choices: ["calculator", "phone", "seal", "nut"], correctAnswer: 0 },
+      { question: "Air that goes into and out of the lungs is _____.", choices: ["oxygen", "energy", "impact", "effort"], correctAnswer: 0 },
+      { question: "What the body uses to move and think is called _____.", choices: ["energy", "pulse", "stress", "danger"], correctAnswer: 0 },
+      { question: "A situation that could harm your health is _____.", choices: ["health risk", "meal plan", "skill set", "goal list"], correctAnswer: 0 },
+      { question: "The rate at which your body uses energy is your _____.", choices: ["metabolism", "breath", "pulse", "impact"], correctAnswer: 0 },
+      { question: "A repeated unconscious action like biting nails is a _____.", choices: ["habit", "illness", "pressure", "goal"], correctAnswer: 0 },
+      { question: "Taking something into your body is to _____.", choices: ["consume", "compare", "train", "measure"], correctAnswer: 0 },
+      { question: "Breathing harmful substances from cigarettes is called _____.", choices: ["smoking", "training", "healing", "collecting"], correctAnswer: 0 },
+      { question: "Anything that enters the lungs when breathing is _____.", choices: ["inhaled", "developed", "measured", "trained"], correctAnswer: 0 },
+      { question: "The life of a person or animal is their _____.", choices: ["life", "task", "goal", "impact"], correctAnswer: 0 },
+      { question: "Anything used to produce results or do work is a _____.", choices: ["tool", "coach", "writer", "seal"], correctAnswer: 0 },
+      { question: "Something that covers or hides something else is a _____.", choices: ["layer", "pressure", "nut", "droplet"], correctAnswer: 0 },
+      { question: "Something that makes an illness worse is a _____.", choices: ["trigger", "effort", "impact", "goal"], correctAnswer: 0 },
+      { question: "To keep something in good condition is to _____.", choices: ["maintain", "avoid", "consume", "train"], correctAnswer: 0 }
+    ];
+
+    // Helper to combine units
+    const allQuestions = [...unit1Questions, ...unit2Questions, ...unit3Questions, ...unit4Questions, ...unit5Questions];
+
+    // App state
+    let pool = [];
+    let currentIndex = 0;
+    let selectedAnswers = []; // { qIndex, selected, correct }
+    let totalQuestions = 0;
+    let quizStartTime = 0; // ms
+    let quizEndTime = 0;   // ms
+    let questionTimes = []; // ms per question index
+    let lastQuestionStart = 0; // ms
+
+    const elements = {
+      unitSelect: document.getElementById('unitSelect'),
+      countSelect: document.getElementById('countSelect'),
+      startBtn: document.getElementById('startBtn'),
+      questionText: document.getElementById('questionText'),
+      choicesEl: document.getElementById('choices'),
+      qIndex: document.getElementById('qIndex'),
+      progressBar: document.getElementById('progressBar'),
+      nextBtn: document.getElementById('nextBtn'),
+      finishBtn: document.getElementById('finishBtn'),
+      totalQ: document.getElementById('totalQ'),
+      answered: document.getElementById('answered'),
+      correct: document.getElementById('correct'),
+      score: document.getElementById('score'),
+      resultModal: document.getElementById('resultModal'),
+      finalScore: document.getElementById('finalScore'),
+      summaryText: document.getElementById('summaryText'),
+      tryAgainBtn: document.getElementById('tryAgainBtn'),
+      reviewBtn: document.getElementById('reviewBtn'),
+      restartBtn: document.getElementById('restartBtn'),
+      exportBtn: document.getElementById('exportBtn'),
+      sidebar: document.querySelector('.sidebar')
+    };
+
+    function ensureMyAnswersPanel() {
+      if (!elements.sidebar) return;
+      let card = document.getElementById('myAnswersCard');
+      if (!card) {
+        card = document.createElement('div');
+        card.id = 'myAnswersCard';
+        card.className = 'card answers-card';
+        card.innerHTML = `
+          <div class="answers-header">
+            <span>My Answers</span>
+            <span class="small muted" id="answersCount">0/${totalQuestions}</span>
+          </div>
+          <div class="answers-list" id="answersList"></div>
+        `;
+        elements.sidebar.appendChild(card);
+      } else {
+        card.querySelector('#answersCount').textContent = `${selectedAnswers.length}/${totalQuestions}`;
+      }
+    }
+
+    function renderMyAnswers() {
+      ensureMyAnswersPanel();
+      const list = document.getElementById('answersList');
+      if (!list) return;
+      list.innerHTML = '';
+      for (let i = 0; i < totalQuestions; i++) {
+        const s = selectedAnswers.find(x => x.qIndex === i);
+        const status = s ? (s.correct ? 'answer-ok' : 'answer-bad') : '';
+        const label = s ? (s.correct ? 'Correct' : 'Wrong') : '—';
+        const item = document.createElement('div');
+        item.className = 'answer-item';
+        item.innerHTML = `
+          <span class="small">Q${i + 1}</span>
+          <span class="answer-pill ${status}">${label}</span>
+        `;
+        item.addEventListener('click', () => {
+          currentIndex = i;
+          renderQuestion();
+        });
+        list.appendChild(item);
+      }
+      const cnt = document.getElementById('answersCount');
+      if (cnt) cnt.textContent = `${selectedAnswers.length}/${totalQuestions}`;
+    }
+
+    function startQuiz() {
+      // build pool based on selection
+      const unit = elements.unitSelect.value;
+      const count = elements.countSelect.value;
+      if (unit === 'unit1') pool = unit1Questions.map(q => ({ ...q, unit: 'unit1' }));
+      else if (unit === 'unit2') pool = unit2Questions.map(q => ({ ...q, unit: 'unit2' }));
+      else if (unit === 'unit3') pool = unit3Questions.map(q => ({ ...q, unit: 'unit3' }));
+      else if (unit === 'unit4') pool = unit4Questions.map(q => ({ ...q, unit: 'unit4' }));
+      else if (unit === 'unit5') pool = unit5Questions.map(q => ({ ...q, unit: 'unit5' }));
+      else pool = [
+        ...unit1Questions.map(q => ({ ...q, unit: 'unit1' })),
+        ...unit2Questions.map(q => ({ ...q, unit: 'unit2' })),
+        ...unit3Questions.map(q => ({ ...q, unit: 'unit3' })),
+        ...unit4Questions.map(q => ({ ...q, unit: 'unit4' })),
+        ...unit5Questions.map(q => ({ ...q, unit: 'unit5' })),
+      ];
+
+      // shuffle pool
+      shuffleArray(pool);
+
+      if (count !== 'all') {
+        const n = parseInt(count, 10);
+        pool = pool.slice(0, Math.min(n, pool.length));
+      }
+
+      totalQuestions = pool.length;
+      currentIndex = 0;
+      selectedAnswers = [];
+      quizStartTime = Date.now();
+      quizEndTime = 0;
+      questionTimes = new Array(totalQuestions).fill(0);
+      lastQuestionStart = quizStartTime;
+      ensureMyAnswersPanel();
+      renderQuestion();
+      updateSidebar();
+      renderMyAnswers();
+      elements.resultModal.style.display = 'none';
+    }
+
+    function renderQuestion() {
+      if (pool.length === 0) {
+        elements.questionText.textContent = 'No questions. Select a unit and press Start.';
+        return;
+      }
+      const q = pool[currentIndex];
+      elements.qIndex.textContent = `Question ${currentIndex + 1} / ${totalQuestions}`;
+      elements.progressBar.style.width = `${Math.round(((currentIndex) / totalQuestions) * 100)}%`;
+      // Question text with subtle animation
+      elements.questionText.textContent = q.question;
+      elements.questionText.classList.remove('fade-in');
+      // force reflow to restart animation
+      void elements.questionText.offsetWidth;
+      elements.questionText.classList.add('fade-in');
+      lastQuestionStart = Date.now();
+
+      // render shuffled choices while preserving original index for correctness
+      elements.choicesEl.innerHTML = '';
+      const order = [...Array(q.choices.length).keys()];
+      shuffleArray(order);
+      order.forEach((origIdx, i) => {
+        const btn = document.createElement('div');
+        btn.className = 'choice fade-in';
+        btn.style.animationDelay = `${0.03 * i}s`;
+        btn.tabIndex = 0;
+        btn.setAttribute('data-choice', origIdx);
+        btn.innerHTML = `<strong>${String.fromCharCode(65 + i)}.</strong> <span>${q.choices[origIdx]}</span>`;
+        btn.onclick = () => selectAnswer(origIdx, btn);
+        elements.choicesEl.appendChild(btn);
+      });
+
+      // disable next until answer
+      elements.nextBtn.disabled = false;
+      elements.finishBtn.disabled = false;
+      updateSidebar();
+    }
+
+    function selectAnswer(choiceIdx, btnEl) {
+      // if already answered this question, ignore
+      const existing = selectedAnswers.find(s => s.qIndex === currentIndex);
+      const q = pool[currentIndex];
+      const isCorrect = (choiceIdx === q.correctAnswer);
+
+      // mark selectedAnswers (override if changing)
+      if (existing) {
+        existing.selected = choiceIdx;
+        existing.correct = isCorrect;
+      } else {
+        selectedAnswers.push({ qIndex: currentIndex, selected: choiceIdx, correct: isCorrect });
+      }
+
+      // record time spent on this question if not yet recorded
+      if (!questionTimes[currentIndex]) {
+        questionTimes[currentIndex] = Date.now() - lastQuestionStart;
+      }
+
+      // visually mark choices
+      const nodes = Array.from(elements.choicesEl.children);
+      nodes.forEach(n => n.classList.add('disabled'));
+      nodes.forEach(n => {
+        const c = parseInt(n.getAttribute('data-choice'), 10);
+        if (c === q.correctAnswer) n.classList.add('correct');
+        if (c === choiceIdx && !isCorrect) n.classList.add('wrong');
+      });
+
+      // animations: pulse correct, shake wrong selection
+      const correctNode = nodes.find(n => parseInt(n.getAttribute('data-choice'), 10) === q.correctAnswer);
+      if (correctNode) correctNode.classList.add('pulse');
+      if (!isCorrect && btnEl) btnEl.classList.add('shake');
+
+      updateSidebar();
+      renderMyAnswers();
+
+      // auto-advance after short delay to allow animations (except if last question)
+      setTimeout(() => {
+        if (currentIndex < totalQuestions - 1) nextQuestion();
+        else finishQuiz();
+      }, 450);
+    }
+
+    function nextQuestion() {
+      // if user skipped answering, still record time
+      if (!questionTimes[currentIndex]) {
+        questionTimes[currentIndex] = Date.now() - lastQuestionStart;
+      }
+      if (currentIndex < totalQuestions - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function finishQuiz() {
+      // calculate score
+      const correctCount = selectedAnswers.filter(s => s.correct).length;
+      const answeredCount = selectedAnswers.length;
+      const scorePercent = totalQuestions ? Math.round((correctCount / totalQuestions) * 100) : 0;
+      quizEndTime = Date.now();
+      const elapsedMin = quizStartTime ? ((quizEndTime - quizStartTime) / 60000) : 0;
+      const elapsedText = `${elapsedMin.toFixed(2)} min`;
+
+      elements.finalScore.textContent = `${correctCount} / ${totalQuestions}`;
+      elements.summaryText.textContent = `Answered ${answeredCount} — ${scorePercent}% — Time: ${elapsedText}`;
+      elements.resultModal.style.display = 'block';
+      elements.progressBar.style.width = `100%`;
+      elements.score.textContent = `${scorePercent}%`;
+      elements.correct.textContent = correctCount;
+      updateSidebar();
+
+      // Build inline analysis with user's answers vs correct
+      const container = elements.resultModal.querySelector('.result');
+      let analysis = document.getElementById('analysis');
+      if (!analysis) {
+        analysis = document.createElement('div');
+        analysis.id = 'analysis';
+        analysis.className = 'card smallpad';
+        container.appendChild(analysis);
+      }
+      // Compose analysis HTML
+      let html = '';
+      html += `<div class="small muted" style="margin-top:10px">Analysis</div>`;
+      html += `<div class="small muted" style="margin:6px 0">Time: ${elapsedText}</div>`;
+
+      // unit/topic accuracy summary
+      const byUnit = {};
+      pool.forEach((q, i) => {
+        const u = q.unit || 'unit';
+        if (!byUnit[u]) byUnit[u] = { correct: 0, total: 0 };
+        const user = selectedAnswers.find(s => s.qIndex === i);
+        byUnit[u].total += 1;
+        if (user && user.correct) byUnit[u].correct += 1;
+      });
+      html += '<div class="small muted" style="margin:6px 0">Accuracy by unit:</div>';
+      html += '<ul class="small" style="margin:0 0 8px 14px">';
+      Object.keys(byUnit).forEach(u => {
+        const entry = byUnit[u];
+        const pct = Math.round((entry.correct / entry.total) * 100);
+        html += `<li>${u}: ${entry.correct}/${entry.total} (${pct}%)</li>`;
+      });
+      html += '</ul>';
+
+      html += '<div class="analysis-scroll">';
+      pool.forEach((q, i) => {
+        const user = selectedAnswers.find(s => s.qIndex === i);
+        const userIdx = user ? user.selected : null;
+        const userText = userIdx !== null && userIdx !== undefined ? q.choices[userIdx] : '(no answer)';
+        const correctText = q.choices[q.correctAnswer];
+        const ok = user ? user.correct : false;
+        const tMs = questionTimes[i] || 0;
+        const tSec = (tMs / 1000).toFixed(1);
+        html += `<div style=\"padding:8px;border:1px solid rgba(255,255,255,0.08);border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.02)\">`;
+        html += `<div class=\"small\" style=\"margin-bottom:6px\"><strong>Q${i + 1}:</strong> ${q.question}</div>`;
+        html += `<div class=\"small\" style=\"color:${ok ? '#16a34a' : '#ef4444'}\"><strong>Your answer:</strong> ${userText}</div>`;
+        if (!ok) {
+          html += `<div class=\"small\" style=\"color:#94a3b8\"><strong>Correct:</strong> ${correctText}</div>`;
+        }
+        html += `<div class=\"small muted\">Time on question: ${tSec}s ${q.unit ? `• ${q.unit}` : ''}</div>`;
+        html += `</div>`;
+      });
+      html += '</div>';
+      analysis.innerHTML = html;
+      const sc = analysis.querySelector('.analysis-scroll');
+      if (sc) sc.scrollTop = 0;
+    }
+
+    function reviewAnswers() {
+      // show all questions with answers
+      const win = window.open('', '_blank');
+      const doc = win.document;
+      doc.write('<html><head><title>Review Answers</title><meta charset="utf-8"></head><body style="font-family:Arial;padding:20px">');
+      doc.write('<h2>Review Answers</h2>');
+      pool.forEach((q, i) => {
+        const user = selectedAnswers.find(s => s.qIndex === i);
+        doc.write('<div style="margin-bottom:12px;padding:10px;border:1px solid #ddd;border-radius:6px">');
+        doc.write(`<div><strong>Q${i + 1}:</strong> ${q.question}</div>`);
+        doc.write('<ul>');
+        q.choices.forEach((c, idx) => {
+          const isCorrect = idx === q.correctAnswer;
+          const isSelected = user && user.selected === idx;
+          let mark = '';
+          if (isCorrect) mark = ' ✅';
+          if (isSelected && !isCorrect) mark = ' ❌ (your choice)';
+          doc.write(`<li>${c}${mark}</li>`);
+        });
+        doc.write('</ul></div>');
+      });
+      doc.write('</body></html>');
+      doc.close();
+    }
+
+    function exportJSON() {
+      const exportData = {
+        selectedUnit: elements.unitSelect.value,
+        totalQuestions,
+        selectedAnswers,
+        pool,
+        questionTimes,
+        elapsedMinutes: quizStartTime ? (quizEndTime - quizStartTime) / 60000 : 0
+      };
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'quiz_export.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      // also export CSV analysis
+      let csv = 'index,unit,question,your_answer,correct_answer,correct,time_seconds\n';
+      pool.forEach((q, i) => {
+        const user = selectedAnswers.find(s => s.qIndex === i);
+        const userIdx = user ? user.selected : null;
+        const userText = userIdx !== null && userIdx !== undefined ? q.choices[userIdx] : '';
+        const correctText = q.choices[q.correctAnswer];
+        const ok = user ? user.correct : false;
+        const tSec = ((questionTimes[i] || 0) / 1000).toFixed(1);
+        const sanitize = (s) => '"' + String(s).replace(/"/g, '""') + '"';
+        csv += [i + 1, q.unit || '', sanitize(q.question), sanitize(userText), sanitize(correctText), ok, tSec].join(',') + '\n';
+      });
+      const blobCsv = new Blob([csv], { type: 'text/csv' });
+      const urlCsv = URL.createObjectURL(blobCsv);
+      const aCsv = document.createElement('a');
+      aCsv.href = urlCsv;
+      aCsv.download = 'quiz_analysis.csv';
+      document.body.appendChild(aCsv);
+      aCsv.click();
+      aCsv.remove();
+      URL.revokeObjectURL(urlCsv);
+    }
+
+    function updateSidebar() {
+      elements.totalQ.textContent = totalQuestions;
+      elements.answered.textContent = selectedAnswers.length;
+      const correctCount = selectedAnswers.filter(s => s.correct).length;
+      elements.correct.textContent = correctCount;
+      const pct = totalQuestions ? Math.round((correctCount / totalQuestions) * 100) : 0;
+      elements.score.textContent = pct + '%';
+    }
+
+    function shuffleArray(a) {
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    // UI bindings
+    elements.startBtn.addEventListener('click', startQuiz);
+    elements.nextBtn.addEventListener('click', nextQuestion);
+    elements.finishBtn.addEventListener('click', finishQuiz);
+    elements.tryAgainBtn && elements.tryAgainBtn.addEventListener('click', () => { startQuiz(); document.getElementById('resultModal').style.display = 'none'; });
+    elements.reviewBtn && elements.reviewBtn.addEventListener('click', reviewAnswers);
+    elements.restartBtn.addEventListener('click', () => { startQuiz(); });
+    elements.exportBtn.addEventListener('click', exportJSON);
+
+    // keyboard navigation (ArrowRight/Enter and A/B/C/D)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextQuestion();
+      if (e.key === 'Enter') {
+        const first = document.querySelector('.choice');
+        if (first) first.click();
+      }
+      const map = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
+      if (map.hasOwnProperty(e.key)) {
+        const idx = map[e.key];
+        const nodes = Array.from(elements.choicesEl.children);
+        if (nodes[idx]) nodes[idx].click();
+      }
+    });
+  </script>
+</body>
+
+</html>
